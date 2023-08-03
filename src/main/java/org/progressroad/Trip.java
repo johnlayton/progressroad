@@ -1,6 +1,8 @@
 package org.progressroad;
 
+import java.time.Duration;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.progressroad.Trip.Status.INVALID;
 import static org.progressroad.Trip.Status.INCOMPLETE;
@@ -23,6 +25,13 @@ public record Trip(Tap on, Tap off) {
         } else {
             return COMPLETED;
         }
+    }
+
+    public Optional<Duration> duration() {
+        return switch (status()) {
+            case CANCELLED, COMPLETED -> Optional.of(Duration.between(on.at(), off.at()));
+            case INCOMPLETE, INVALID -> Optional.empty();
+        };
     }
 
     public enum Status {CANCELLED, COMPLETED, INCOMPLETE, INVALID}

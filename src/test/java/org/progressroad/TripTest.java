@@ -3,9 +3,11 @@ package org.progressroad;
 import org.junit.jupiter.api.Test;
 import org.progressroad.Tap.Type;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.progressroad.Tap.Type.ON;
 import static org.progressroad.Tap.Type.OFF;
 import static org.progressroad.Trip.Status.*;
@@ -42,10 +44,33 @@ public class TripTest {
         assertEquals(INVALID, new Trip(create(ON, "stopId1"), create(ON, "stopId1")).status());
     }
 
+    @Test
+    void shouldReportDurationForCompletedTrip() {
+        final Optional<Duration> duration = new Trip(
+                create(ON, "stopId1", OffsetDateTime.parse("2023-08-03T12:00:00Z")),
+                create(OFF, "stopId2", OffsetDateTime.parse("2023-08-03T13:00:00Z")))
+                .duration();
+        assertTrue(duration.isPresent());
+        assertEquals(3600L, duration.map(Duration::getSeconds).get());
+    }
+
+    @Test
+    void shouldReportDurationForIncompleteTrip() {
+        final Optional<Duration> duration = new Trip(
+                create(ON, "stopId1", OffsetDateTime.parse("2023-08-03T12:00:00Z")),
+                null)
+                .duration();
+        assertFalse(duration.isPresent());
+    }
+
     private static Tap create(final Type type, final String stopId) {
+        return create(type, stopId, OffsetDateTime.now());
+    }
+
+    private static Tap create(final Type type, final String stopId, final OffsetDateTime now) {
         return new Tap(
                 1,
-                OffsetDateTime.now(),
+                now,
                 type,
                 stopId,
                 "companyId",
