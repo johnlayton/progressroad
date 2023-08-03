@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.progressroad.Fixtures.billing;
 import static org.progressroad.Fixtures.tap;
 import static org.progressroad.Tap.Type.OFF;
 import static org.progressroad.Tap.Type.ON;
@@ -61,5 +62,17 @@ public class TripTest {
                 null)
                 .duration();
         assertFalse(duration.isPresent());
+    }
+
+    @Test
+    void shouldDelegateToBillingModelToCalculateCompletedTripCost() throws MissingBillingInformationException {
+        assertEquals(325, new Trip(tap(ON, "Stop1"), tap(OFF, "Stop2"))
+                .cost(billing()));
+    }
+
+    @Test
+    void shouldDelegateToBillingModelToCalculateInCompleteTripCost() throws MissingBillingInformationException {
+        assertEquals(730, new Trip(tap(ON, "Stop1"), null)
+                .cost(billing()));
     }
 }

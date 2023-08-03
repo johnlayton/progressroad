@@ -31,5 +31,12 @@ public record Trip(Tap on, Tap off) {
         };
     }
 
+    public int cost(final Billing billing) throws MissingBillingInformationException {
+        return switch (status()) {
+            case COMPLETED -> billing.minimumFare(on, off);
+            case INCOMPLETE -> billing.maximumFare(on);
+            case CANCELLED, INVALID -> 0;
+        };
+    }
     public enum Status {CANCELLED, COMPLETED, INCOMPLETE, INVALID}
 }
