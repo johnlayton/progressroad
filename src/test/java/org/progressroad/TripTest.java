@@ -27,6 +27,21 @@ public class TripTest {
         assertEquals(INCOMPLETE, new Trip(create(ON, "stopId1"), null).status());
     }
 
+    @Test
+    void shouldReportTripInvalidWhenMissingTapOn() {
+        assertEquals(INVALID, new Trip(null, create(OFF, "stopId1")).status());
+    }
+
+    @Test
+    void shouldReportTripInvalidWhenTapOnIsRecordedAsTapOff() {
+        assertEquals(INVALID, new Trip(create(OFF, "stopId1"), null).status());
+    }
+
+    @Test
+    void shouldReportTripInvalidWhenTapFFIsRecordedAsTapOn() {
+        assertEquals(INVALID, new Trip(create(ON, "stopId1"), create(ON, "stopId1")).status());
+    }
+
     private static Tap create(final Type type, final String stopId) {
         return new Tap(
                 1,
