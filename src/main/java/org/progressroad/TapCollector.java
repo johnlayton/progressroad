@@ -13,7 +13,7 @@ public class TapCollector {
 
     TapCollector() {}
 
-    private TapCollector(final Set<Trip> trips1,
+    TapCollector(final Set<Trip> trips1,
                          final Set<Trip> trips2) {
         trips.addAll(trips1);
         trips.addAll(trips2);
