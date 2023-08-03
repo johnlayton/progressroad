@@ -19,7 +19,7 @@ asdf install java openjdk-17.0.2
 Example
 
 ```shell
-./gradlew run --args="./src/test/resources/demo/taps.csv ./src/test/resources/demo/trips.csv"
+./gradlew run --args="./src/test/resources/org/progressroad/app/taps.csv ./src/test/resources/org/progressroad/app/trips.csv"
 ```
 
 ## Tests
