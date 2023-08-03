@@ -18,4 +18,12 @@ public record Billing(Set<Fare> fares) {
                 .min()
                 .orElseThrow(() -> new MissingBillingInformationException(on, off));
     }
+
+    public int maximumFare(Tap on) {
+        return fares.stream()
+                .filter(fare -> fare.start().equals(on.stopId()))
+                .mapToInt(Fare::cost)
+                .max()
+                .orElseThrow();
+    }
 }

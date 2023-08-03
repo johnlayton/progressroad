@@ -15,7 +15,7 @@ import static org.progressroad.Tap.Type.OFF;
 public class BillingTest {
 
     @Test
-    void shouldShouldCalculateFareForCompletedTripForward() throws Exception {
+    void shouldCalculateFareForCompletedTripForward() throws Exception {
         assertEquals(325, billing().minimumFare(
                 tap(ON, "Stop1"),
                 tap(OFF, "Stop2")
@@ -23,7 +23,7 @@ public class BillingTest {
     }
 
     @Test
-    void shouldShouldCalculateFareForCompletedTripReversed() throws Exception  {
+    void shouldCalculateFareForCompletedTripReversed() throws Exception {
         assertEquals(325, billing().minimumFare(
                 tap(ON, "Stop2"),
                 tap(OFF, "Stop1")
@@ -32,21 +32,34 @@ public class BillingTest {
 
     @Test
     void shouldThrowExceptionWhenTapOnAtUnknownStop() {
-        assertThrows(MissingBillingInformationException.class, () -> {
+        final MissingBillingInformationException exception = assertThrows(MissingBillingInformationException.class, () -> {
             billing().minimumFare(
                     tap(ON, "Stop4"),
                     tap(OFF, "Stop2")
             );
         });
+
+        assertEquals("Missing billing information for route Stop4 to Stop2", exception.getMessage());
     }
 
     @Test
     void shouldThrowExceptionWhenTapOffAtUnknownStop() {
-        assertThrows(MissingBillingInformationException.class, () -> {
+        final MissingBillingInformationException exception = assertThrows(MissingBillingInformationException.class, () -> {
             billing().minimumFare(
                     tap(ON, "Stop1"),
                     tap(OFF, "Stop4")
             );
         });
+        assertEquals("Missing billing information for route Stop1 to Stop4", exception.getMessage());
+    }
+
+    @Test
+    void shouldCalculateFareForIncompleteTrip() {
+        assertEquals(550, billing().maximumFare(
+                tap(ON, "Stop2")
+        ));
+        assertEquals(730, billing().maximumFare(
+                tap(ON, "Stop1")
+        ));
     }
 }
