@@ -2,15 +2,12 @@ package org.progressroad;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.OffsetDateTime;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.progressroad.Fixtures.billing;
 import static org.progressroad.Fixtures.tap;
-import static org.progressroad.Tap.Type.ON;
 import static org.progressroad.Tap.Type.OFF;
+import static org.progressroad.Tap.Type.ON;
 
 public class BillingTest {
 

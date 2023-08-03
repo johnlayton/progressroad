@@ -4,12 +4,9 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.progressroad.Trip.Status.INVALID;
-import static org.progressroad.Trip.Status.INCOMPLETE;
-import static org.progressroad.Trip.Status.CANCELLED;
-import static org.progressroad.Trip.Status.COMPLETED;
-import static org.progressroad.Tap.Type.ON;
 import static org.progressroad.Tap.Type.OFF;
+import static org.progressroad.Tap.Type.ON;
+import static org.progressroad.Trip.Status.*;
 
 public record Trip(Tap on, Tap off) {
 
