@@ -51,7 +51,7 @@ public class BillingTest {
     }
 
     @Test
-    void shouldCalculateFareForIncompleteTrip() {
+    void shouldCalculateFareForIncompleteTrip() throws Exception {
         assertEquals(550, billing().maximumFare(
                 tap(ON, "Stop2")
         ));
@@ -59,4 +59,15 @@ public class BillingTest {
                 tap(ON, "Stop1")
         ));
     }
+
+    @Test
+    void shouldThrowExceptionWhenTapOnAtUnknownStopIncomplete() {
+        final MissingBillingInformationException exception = assertThrows(MissingBillingInformationException.class, () -> {
+            billing().maximumFare(
+                    tap(ON, "Stop4")
+            );
+        });
+        assertEquals("Missing billing information for route Stop4 to N/A", exception.getMessage());
+    }
+
 }

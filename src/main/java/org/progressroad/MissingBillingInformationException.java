@@ -14,8 +14,8 @@ public class MissingBillingInformationException extends Exception {
     @Override
     public String getMessage() {
         return "Missing billing information for route %s to %s".formatted(
-                Objects.nonNull(on.stopId()) ? on.stopId() : "N/A",
-                Objects.nonNull(off.stopId()) ? off.stopId() : "N/A"
+                Objects.nonNull(on) ? on.stopId() : "N/A",
+                Objects.nonNull(off) ? off.stopId() : "N/A"
         );
     }
 }
