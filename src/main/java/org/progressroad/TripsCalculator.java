@@ -23,7 +23,8 @@ public class TripsCalculator {
     }
 
     public void calculate(File taps, File trips) throws IOException {
-        Files.write(trips.toPath(), Stream.concat(
+        Files.write(trips.toPath(),
+                Stream.concat(
                         Stream.of(tripsWriter.header()),
                         Files.readAllLines(taps.toPath(), Charset.defaultCharset())
                                 .stream()
