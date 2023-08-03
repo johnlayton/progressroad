@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     implementation(libs.bundles.logging)
+    testImplementation(libs.hamcrest)
 }
 
 testing {
