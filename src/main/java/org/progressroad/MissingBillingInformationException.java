@@ -2,7 +2,7 @@ package org.progressroad;
 
 import java.util.Objects;
 
-public class MissingBillingInformationException extends Exception {
+public class MissingBillingInformationException extends RuntimeException {
     private final Tap on;
     private final Tap off;
 
