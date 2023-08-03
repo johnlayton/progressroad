@@ -1,14 +1,24 @@
 package org.progressroad;
 
+import org.progressroad.Tap.Type;
+
 import java.time.OffsetDateTime;
 import java.util.Set;
 
 public class Fixtures {
-    static Tap tap(final Tap.Type type, final String stopId) {
-        return tap(type, stopId, OffsetDateTime.now());
+    static Tap tap(final Type type, final String stopId) {
+        return tap(type, stopId, OffsetDateTime.now(), "pan");
     }
 
-    static Tap tap(final Tap.Type type, final String stopId, final OffsetDateTime now) {
+    static Tap tap(final Type type, final String stopId, final OffsetDateTime now) {
+        return tap(type, stopId, now, "pan");
+    }
+
+    static Tap tap(final Type type, final String stopId, final String pan) {
+        return tap(type, stopId, OffsetDateTime.now(), pan);
+    }
+
+    static Tap tap(final Type type, final String stopId, final OffsetDateTime now, String pan) {
         return new Tap(
                 1,
                 now,
@@ -16,7 +26,7 @@ public class Fixtures {
                 stopId,
                 "companyId",
                 "busId",
-                "pan"
+                pan
         );
     }
 

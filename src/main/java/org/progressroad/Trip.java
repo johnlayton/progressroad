@@ -42,5 +42,18 @@ public record Trip(Tap on, Tap off) {
         };
     }
 
+    public boolean matchesTap(Tap tap) {
+        return switch(tap.type()) {
+            case ON -> Objects.isNull(on()) && Objects.nonNull(off())
+                    && Objects.equals(off().pan(), tap.pan())
+                    && Objects.equals(off().companyId(), tap.companyId())
+                    && Objects.equals(off().busId(), tap.busId());
+            case OFF -> Objects.isNull(off()) && Objects.nonNull(on())
+                    && Objects.equals(on().pan(), tap.pan())
+                    && Objects.equals(on().companyId(), tap.companyId())
+                    && Objects.equals(on().busId(), tap.busId());
+        };
+    }
+
     public enum Status {CANCELLED, COMPLETED, INCOMPLETE, INVALID}
 }
