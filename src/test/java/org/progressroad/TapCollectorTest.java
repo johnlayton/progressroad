@@ -8,6 +8,8 @@ import org.progressroad.Tap.Type;
 import org.progressroad.Trip.Status;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -63,6 +65,20 @@ public class TapCollectorTest {
 
         assertThat(collector.getTrips(), hasItem(matchingTrip(COMPLETED, ON, "Stop3", OFF, "Stop2")));
         assertThat(collector.getTrips(), hasItem(matchingTrip(COMPLETED, ON, "Stop1", OFF, "Stop3")));
+    }
+
+    @Test
+    void shouldSupplyCollectorToApplyToStreamOfTaps() {
+        final Set<Trip> trips = Stream.of(
+                tap(ON, "Stop1", OffsetDateTime.parse("2023-08-03T14:00:00Z"), "1111111111111111"),
+                tap(ON, "Stop3", OffsetDateTime.parse("2023-08-03T11:00:00Z"), "1111111111111111"),
+                tap(OFF, "Stop2", OffsetDateTime.parse("2023-08-03T12:30:00Z"), "1111111111111111"),
+                tap(OFF, "Stop3", OffsetDateTime.parse("2023-08-03T14:30:00Z"), "1111111111111111")
+        ).collect(TapCollector.create());
+
+
+        assertThat(trips, hasItem(matchingTrip(COMPLETED, ON, "Stop3", OFF, "Stop2")));
+        assertThat(trips, hasItem(matchingTrip(COMPLETED, ON, "Stop1", OFF, "Stop3")));
     }
 
     private static Matcher<Trip> matchingTrip(final Status status,

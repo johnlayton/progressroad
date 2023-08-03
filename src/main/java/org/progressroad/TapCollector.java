@@ -6,9 +6,33 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collector;
 
 public class TapCollector {
     private final Set<Trip> trips = new HashSet<>();
+
+    TapCollector() {}
+
+    private TapCollector(final Set<Trip> trips1,
+                         final Set<Trip> trips2) {
+        trips.addAll(trips1);
+        trips.addAll(trips2);
+    }
+
+    public static Collector<Tap, ?, Set<Trip>> create() {
+        return Collector.of(
+                TapCollector::new,
+                TapCollector::addTap,
+                TapCollector::merge,
+                TapCollector::getTrips,
+                Collector.Characteristics.UNORDERED
+        );
+    }
+
+    public static TapCollector merge(final TapCollector a,
+                                     final TapCollector b) {
+        return new TapCollector(a.getTrips(), b.getTrips());
+    }
 
     public Set<Trip> getTrips() {
         return trips;
