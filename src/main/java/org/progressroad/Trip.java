@@ -6,7 +6,10 @@ import java.util.Optional;
 
 import static org.progressroad.Tap.Type.OFF;
 import static org.progressroad.Tap.Type.ON;
-import static org.progressroad.Trip.Status.*;
+import static org.progressroad.Trip.Status.CANCELLED;
+import static org.progressroad.Trip.Status.COMPLETED;
+import static org.progressroad.Trip.Status.INCOMPLETE;
+import static org.progressroad.Trip.Status.INVALID;
 
 public record Trip(Tap on, Tap off) {
 
@@ -38,5 +41,6 @@ public record Trip(Tap on, Tap off) {
             case CANCELLED, INVALID -> 0;
         };
     }
+
     public enum Status {CANCELLED, COMPLETED, INCOMPLETE, INVALID}
 }
