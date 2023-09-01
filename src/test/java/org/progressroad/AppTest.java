@@ -17,12 +17,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AppTest {
 
     @Test
-    void shouldAcceptFilesOnConstructionAndValidate() {
+    void demo() throws IOException {
+        final String taps = AppTest.class.getResource("app").getPath() + "/taps.csv";
+        final String trips = AppTest.class.getResource("app").getPath() + "/trips.csv";
+        final App app = new App(taps, trips);
+        app.generateTripsFile();
+    }
+
+    @Test
+    void shouldAcceptFilesOnConstructionAndValidate() throws IOException {
         final String taps = AppTest.class.getResource("app").getPath() + "/taps.csv";
         final String trips = AppTest.class.getResource("app").getPath() + "/trips.csv";
         final App app = new App(taps, trips);
 
         assertTrue(app.validateInput());
+
+        app.generateTripsFile();
     }
 
     @Test

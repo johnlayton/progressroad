@@ -44,7 +44,8 @@ public class App {
 
     public void generateTripsFile() throws IOException {
         LOGGER.info("Generate Trips");
-        new TripsCalculator(new TapsReaderImpl(FORMATTER),
+        new TripsCalculator(
+                new TapsReaderImpl(FORMATTER),
                 new TripsWriterImpl(FORMATTER, Billing.create(Set.of(
                         new Fare("Stop1", "Stop2", 325),
                         new Fare("Stop2", "Stop3", 550),

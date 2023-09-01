@@ -1,5 +1,8 @@
 package org.progressroad;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -9,6 +12,8 @@ import java.util.function.Function;
 import static org.progressroad.Tap.Type.valueOf;
 
 public class TapsReaderImpl implements TapsReader {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TapsReaderImpl.class);
 
     private final DateTimeFormatter formatter;
 
@@ -25,6 +30,7 @@ public class TapsReaderImpl implements TapsReader {
     @Override
     public Function<String, Tap> func() {
         return entry -> {
+            LOGGER.info("{}", entry);
             final String[] fields = entry.split(",");
             return new Tap(
                     Integer.parseInt(fields[0].trim()),

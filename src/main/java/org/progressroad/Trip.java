@@ -13,6 +13,20 @@ import static org.progressroad.Trip.Status.INVALID;
 
 public record Trip(Tap on, Tap off) {
 
+    public static Trip trip(Tap tap) {
+        return switch (tap.type()) {
+            case ON -> new Trip(tap, null);
+            case OFF -> new Trip(null, tap);
+        };
+    }
+
+    public Trip tap(Tap tap) {
+        return switch (tap.type()) {
+            case ON -> new Trip(tap, off);
+            case OFF -> new Trip(on, tap);
+        };
+    }
+
     public Status status() {
         if (Objects.isNull(on) || on.type() == OFF) {
             return INVALID;

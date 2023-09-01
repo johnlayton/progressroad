@@ -6,9 +6,11 @@
         </encoder>
     </appender>
 
+<!--
     <root level="error">
         <appender-ref ref="console"/>
     </root>
+-->
 
     <logger name="org.progressroad" level="debug">
         <appender-ref ref="console"/>

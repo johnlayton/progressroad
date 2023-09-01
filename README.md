@@ -13,7 +13,7 @@ asdf install java openjdk-17.0.2
 ## Usage
 
 ```shell
-./gradlew(.bat) run --args="<relative path to taps.csv> <realtive path to trips.cvs>"
+./gradlew(.bat) run --args="<relative path to taps.csv> <relative path to trips.cvs>"
 ```
 
 Example
